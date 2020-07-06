@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h2>Podveyance</h2>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -9,6 +9,7 @@
 export default {
   name: 'App',
   components: {
+
   }
 }
 </script>
