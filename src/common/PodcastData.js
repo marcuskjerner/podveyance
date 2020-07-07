@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 
-const RssEpisodeExtractor = require('./components/RssEpisodeExtractor')
+const RssEpisodeExtractor = require('@/common/RssEpisodeExtractor')
 
 
 class PodcastData {

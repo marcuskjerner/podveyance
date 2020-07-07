@@ -6,11 +6,12 @@ class RssEpisodeExtractor {
     constructor(rssUrl) {
         this.url = rssUrl;
         this.episodes = []
+        this.extractor = new RssEpiseExtractor();
     }
 
     async getEpisodes() {
         try {
-            let feed = await parser.parseURL(this.url);
+            let feed = await this.extractor.parseURL(this.url);
             
             feed.items.forEach(item => {
                 this.episodes.push(this.extractEpisode(item))
