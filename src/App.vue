@@ -37,6 +37,7 @@ export default {
     }
 
     #app-container {
+      background-color: #111;
       width: 100%;
       max-width: 480px;
       margin: 0 auto;
@@ -57,5 +58,10 @@ export default {
     *::-webkit-scrollbar-thumb {
       background-color: grey;
       border-radius: 10px;
+    }
+
+    .menu-icon {
+      color: white;
+      font-size: 1.2rem;
     }
 </style>

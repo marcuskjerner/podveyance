@@ -1,9 +1,10 @@
 <template>
     <div class="library">
         <div class="search-query">
-            <input v-model="searchQuery" placeholder="Search for your next podcast" id="search-query__input">
+            <font-awesome-icon icon="chevron-left" class="menu-icon"/>
+            <input v-model="searchQuery" placeholder="Search for your next podcast" id="search-query__input" v-on:keyup="search">
         </div>
-        <div v-for="pod in podcasts" :key="pod.name" class="podcast-info-list">
+        <div v-for="pod in podcasts" :key="generatePodUid(pod)" class="podcast-info-list">
                 <div class="podcast-info-list__artwork">
                     <img :src="pod.artworkUrl" :alt="pod.name">    
                 </div>
@@ -23,6 +24,7 @@
         data() {
             return {
                 name: 'Marcus',
+                searchQuery: '',
                 podcasts: []
             }
         },
@@ -32,28 +34,53 @@
         }, 
         methods: {
             getPodcasts: async function () {
+                this.podcasts = []
                 let vm = this
                 const pd = new PodcastData()
-                try {
-                    let podcastData = await pd.getPodcasts("p3")
+                if(this.searchQuery.length > 1) {
+                    try {
+                        let podcastData = await pd.getPodcasts(this.searchQuery)
+                        if(podcastData.results) {
+                            podcastData.results.forEach(podcast => {
+                                if(!vm.isDuplicate(podcast.id)) {
+                                    const data = {
+                                        authors: podcast.artistName,
+                                        name: podcast.trackName,
+                                        country: podcast.country,
+                                        artworkUrl: podcast.artworkUrl600,
+                                        genres: podcast.genres,
+                                        feedUrl: podcast.feedUrl,
+                                        id: podcast.collectionId
+                                    }
 
-                    podcastData.results.forEach(podcast => {
-                        const data = {
-                            authors: podcast.artistName,
-                            name: podcast.trackName,
-                            country: podcast.country,
-                            artworkUrl: podcast.artworkUrl600,
-                            genres: podcast.genres,
-                            feedUrl: podcast.feedUrl
+                                    vm.podcasts.push(data)
+                                }
+                                
+                            })
                         }
-                        vm.podcasts.push(data)
-                    })
-
-                    
-
-                } catch (error) {
-                    console.log(error)
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+                } else {
+                    this.podcasts = []
                 }
+                
+            },
+            search() {
+                this.getPodcasts(this.searchQuery)
+            },
+            generatePodUid(podcast) {
+                let uid = podcast.name.trim() + podcast.id
+                return uid
+            },
+            isDuplicate(id) {
+                this.podcasts.forEach(pod => {
+                    if(pod.id === id) {
+                        return true
+                    }
+                    return false
+                })
             }
         }
     }
@@ -67,10 +94,10 @@
 
     .podcast-info-list {
         position: relative;
-        margin: 0.5rem auto;
+        margin: 1rem auto;
         background: #111;
         width: 480px;
-        max-width: 100%;
+        max-width: 90%;
         max-height: 96px;
         cursor: pointer;
         transition: background-color 0.2s ease;
@@ -97,18 +124,29 @@
     }
 
     .search-query {
+        display: grid;
+        grid-template-columns: 1fr 19fr;
+        justify-items: center;
+        align-items: center;
         width: 100%;
         height: 5rem;
+
+        .menu-icon {
+            cursor: pointer;
+            width: 52px;
+        }
     }
 
     #search-query__input {
         width: 100%;
-        padding: 1rem 1rem;
         font-weight: bold;
         font-size: 1rem;
-        border-radius: 10px;
+        background: transparent;
+        color: #fafafa;
     }
 
-    
+        
 
-</style>
+</style>textarea:focus, input:focus{
+    outline: none;
+}
