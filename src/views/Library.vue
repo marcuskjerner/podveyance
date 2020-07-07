@@ -1,7 +1,7 @@
 <template>
     <div class="library">
-        <div class="search">
-            <input v-model="searchQuery" placeholder="Search for your next podcast">
+        <div class="search-query">
+            <input v-model="searchQuery" placeholder="Search for your next podcast" id="search-query__input">
         </div>
         <div v-for="pod in podcasts" :key="pod.name" class="podcast-info-list">
                 <div class="podcast-info-list__artwork">
@@ -61,17 +61,20 @@
 
 <style lang="scss" scoped>
     
+    .library {
+        background-color: #111;
+    }
+
     .podcast-info-list {
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1fr 4fr;
+        position: relative;
+        margin: 0.5rem auto;
         background: #111;
+        width: 480px;
         max-width: 100%;
-        word-break: break-all;
-        max-height: 128px;
-        display: block;
+        max-height: 96px;
         cursor: pointer;
         transition: background-color 0.2s ease;
+        padding: 0 -2rem 0 2rem;
         &:hover {
             background-color: #141414;
         }
@@ -81,15 +84,31 @@
     }
 
     .podcast-info-list__artwork > img {
-        width: 128px;
-        height: 128px;
+        width: 96px;
+        height: 96px;
     }
 
     .podcast-info-list__text {
         color: #ececec;
         font-family: sans-serif;
-        text-align: left;
-        padding-left: 146px;
-        padding-top: 1rem;
+        padding-left: 128px;
+        position: absolute;
+        top: 1rem;
     }
+
+    .search-query {
+        width: 100%;
+        height: 5rem;
+    }
+
+    #search-query__input {
+        width: 100%;
+        padding: 1rem 1rem;
+        font-weight: bold;
+        font-size: 1rem;
+        border-radius: 10px;
+    }
+
+    
+
 </style>

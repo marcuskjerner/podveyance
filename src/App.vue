@@ -18,6 +18,8 @@ export default {
 </script>
 
 <style>
+  @import url('./styles/reset.scss');
+  
   * {
     margin: 0;
     padding: 0;
