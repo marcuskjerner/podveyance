@@ -1,5 +1,5 @@
 <template>
-    <div class="library">
+    <div class="search">
         <div class="search-query">
             <font-awesome-icon icon="chevron-left" class="menu-icon"/>
             <input v-model="searchQuery" placeholder="Search for your next podcast" id="search-query__input" v-on:keyup="search">
@@ -20,7 +20,7 @@
     import PodcastData from '@/common/PodcastData'
     
     export default {
-        name: 'library',
+        name: 'search',
         data() {
             return {
                 name: 'Marcus',
@@ -88,7 +88,7 @@
 
 <style lang="scss" scoped>
     
-    .library {
+    .search {
         background-color: #111;
     }
 

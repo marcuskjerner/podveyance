@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Home</h1>
-        <router-link to="/library">Go to library</router-link>
+        <router-link to="/searh">Go to Search</router-link>
     </div>
 </template>
 
