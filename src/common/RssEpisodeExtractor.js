@@ -8,9 +8,11 @@ class RssEpisodeExtractor {
   }
 
   async getEpisodes (feedUrl) {
+    const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
+
     this.feedUrl = feedUrl
     try {
-      let feed = await parser.parseURL(this.feedUrl)
+      let feed = await parser.parseURL(CORS_PROXY + this.feedUrl)
 
       feed.items.forEach(item => {
         this.episodes.push(this.extractEpisode(item))

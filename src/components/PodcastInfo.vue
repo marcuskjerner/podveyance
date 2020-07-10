@@ -1,5 +1,5 @@
 <template>
-    <div id="music-player">
+    <div id="podcast-list-item">
 
     </div>
 </template>
@@ -11,10 +11,6 @@
 </script>
 
 <style lang="scss" scoped>
-    #music-payer {
-        width: 100px;
-        height: 100px;
-        background:red;
-    }
+    
 </style>
 

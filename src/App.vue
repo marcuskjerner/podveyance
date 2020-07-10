@@ -19,7 +19,7 @@ export default {
 
 <style>
   @import url('./styles/reset.scss');
-  
+  @import url(https://fonts.googleapis.com/css?family=Lato:100,100italic,300,300italic,regular,italic,700,700italic,900,900italic);
   * {
     margin: 0;
     padding: 0;
@@ -27,13 +27,14 @@ export default {
   }
 
    #app {
-        display: grid;
-        align-items: center;
-        justify-content: center;
-        background-color: #222;
-        height: 100vh;
-        visibility: 100vw;
-        overflow: hidden;
+      font-family: 'Lato', sans-serif;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      background-color: #222;
+      height: 100vh;
+      visibility: 100vw;
+      overflow: hidden;
     }
 
     #app-container {

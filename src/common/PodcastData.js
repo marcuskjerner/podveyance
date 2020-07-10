@@ -19,7 +19,14 @@ class PodcastData {
 
     try {
       const res = await fetch(
-        `https://itunes.apple.com/search?term=${queryStr}&media=podcast&enities=podcast&attribute=titleTerm`
+        `https://itunes.apple.com/search?term=${queryStr}&media=podcast&enities=podcast&attribute=titleTerm`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/JSON'
+          }
+        }
+
       )
       const data = await res.json()
 
