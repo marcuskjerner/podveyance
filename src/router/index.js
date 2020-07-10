@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/Home'
 import Search from '@/views/Search'
+import Podcast from '@/views/Podcast'
 
 Vue.use(Router)
 
@@ -10,13 +11,19 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       component: Home
     },
     {
       path: '/search',
-      name: 'Search',
+      name: 'search',
       component: Search
+    },
+    {
+      path: '/podcast',
+      name: 'podcast',
+      component: Podcast,
+      props: true
     }
   ]
 })

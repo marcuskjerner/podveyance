@@ -4,13 +4,15 @@
             <font-awesome-icon icon="chevron-left" class="menu-icon"/>
             <input v-model="searchQuery" placeholder="Search for your next podcast" id="search-query__input" v-on:keyup="search">
         </div>
-        <div v-for="pod in podcasts" :key="generatePodUid(pod)" class="podcast-info-list">
-                <div class="podcast-info-list__artwork">
-                    <img :src="pod.artworkUrl" :alt="pod.name">    
-                </div>
-                <div class="podcast-info-list__text">
-                    <h4>{{ pod.name }}</h4>
-                    <p>{{ pod.author }}</p>
+        <div v-for="pod in podcasts" :key="generatePodUid(pod)" :podcastData="pod" class="podcast-info-list">
+                <div @click="pushRoute('podcast', pod)">
+                    <div class="podcast-info-list__artwork">
+                        <img :src="pod.artworkUrl" :alt="pod.name">    
+                    </div>
+                    <div class="podcast-info-list__text">
+                        <h4>{{ pod.name }}</h4>
+                        <p>{{ pod.author }}</p>
+                    </div>
                 </div>
         </div>
     </div>  
@@ -23,7 +25,7 @@
         name: 'search',
         data() {
             return {
-                name: 'Marcus',
+                name: 'Search',
                 searchQuery: '',
                 podcasts: []
             }
@@ -37,12 +39,13 @@
                 this.podcasts = []
                 let vm = this
                 const pd = new PodcastData()
+
                 if(this.searchQuery.length > 1) {
                     try {
                         let podcastData = await pd.getPodcasts(this.searchQuery)
                         if(podcastData.results) {
                             podcastData.results.forEach(podcast => {
-                                if(!vm.isDuplicate(podcast.id)) {
+                                if(!vm.isDuplicate(podcast)) {
                                     const data = {
                                         authors: podcast.artistName,
                                         name: podcast.trackName,
@@ -71,16 +74,24 @@
                 this.getPodcasts(this.searchQuery)
             },
             generatePodUid(podcast) {
-                let uid = podcast.name.trim() + podcast.id
+                let uid = podcast.name.trim() + this.$uuid.v4()
                 return uid
             },
-            isDuplicate(id) {
+            isDuplicate(podcast) {
                 this.podcasts.forEach(pod => {
-                    if(pod.id === id) {
+                    if(pod.name == podcast.name && pod.name == podcast.name) {
                         return true
                     }
                     return false
                 })
+            },
+            pushRoute(view, podcast) {
+                this.$router.push({
+                    name: view,
+                    params: {
+                        podcastData: podcast
+                    }
+                }) 
             }
         }
     }

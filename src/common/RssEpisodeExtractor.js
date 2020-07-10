@@ -1,44 +1,43 @@
-let Parser = require('rss-parser');
-let parser = new Parser();
+let Parser = require('rss-parser')
+let parser = new Parser()
 
 class RssEpisodeExtractor {
+  constructor () {
+    this.feedUrl = ''
+    this.episodes = []
+  }
 
-    constructor(rssUrl) {
-        this.url = rssUrl;
-        this.episodes = []
-        this.extractor = new RssEpiseExtractor();
+  async getEpisodes (feedUrl) {
+    this.feedUrl = feedUrl
+    try {
+      let feed = await parser.parseURL(this.feedUrl)
+
+      feed.items.forEach(item => {
+        this.episodes.push(this.extractEpisode(item))
+      })
+      console.log(this.episodes)
+      return this.episodes
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  extractEpisode (item) {
+    const episode = {
+      title: item.title,
+      publishData: item.pubDate,
+      description: item.contentSnippet,
+      duration: item.itunes.duration,
+      thumbnail: item.itunes.image,
+      audio: {
+        url: item.enclosure.url,
+        length: item.enclosure.length,
+        type: item.enclosure.type
+      }
     }
 
-    async getEpisodes() {
-        try {
-            let feed = await this.extractor.parseURL(this.url);
-            
-            feed.items.forEach(item => {
-                this.episodes.push(this.extractEpisode(item))
-            })            
-
-            return this.episodes;
-        } catch(err) {
-            console.error(err)     
-        }
-    }
-
-    extractEpisode (item) {
-        const episode = {
-            title: item.title,
-            publishData: item.pubDate,
-            description: item.contentSnippet,
-            duration: item.itunes.duration,
-            thumbnail: item.itunes.image,
-            audio: {
-                url: item.enclosure.url,
-                length: item.enclosure.length,
-                type: item.enclosure.type
-            }
-        }
-
-        return episode
-    }
+    return episode
+  }
 }
 
 export default RssEpisodeExtractor
