@@ -15,6 +15,8 @@
       <div v-for="episode in episodes" :key="episode.name" :episodeData="episode" class="episodes">
         <podcastListItem :episodeData="episode"></podcastListItem>
       </div>
+
+      <font-awesome-icon icon="chevron-left" class="back-button" @click="$router.go(-1)" style="cursor: pointer;"/>
     </div>
 </template>
 
@@ -25,6 +27,7 @@
   export default {
       name: 'podcast',
       mounted() {
+        this.init()
         this.getPodcastInfo()
         this.isSubscribed()
       },
@@ -39,6 +42,10 @@
         }
       },
       methods: {
+        init() {
+          this.episodes = []
+          this.isSubscribed = false
+        },
         async getPodcastInfo() {
           this.episodes = await extractor.getEpisodes(this.$route.params.podcastData.feedUrl)
 
@@ -71,7 +78,7 @@
   .podcast-info {
     width: 100%;
     min-width: 480px;
-    
+    position: relative;
   }
   .podcast-info_header {
       background-color: #0a0a0a;
@@ -112,5 +119,11 @@
     }
   }
 
-
+  .back-button {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    color: white;
+    font-size: 1.2rem;
+  }
 </style>

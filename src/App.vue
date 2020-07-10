@@ -65,4 +65,10 @@ export default {
       color: white;
       font-size: 1.2rem;
     }
+
+    .back-button {
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+    }
 </style>

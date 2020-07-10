@@ -1,7 +1,7 @@
 <template>
     <div class="search">
         <div class="search-query">
-            <font-awesome-icon icon="chevron-left" class="menu-icon"/>
+            <font-awesome-icon icon="chevron-left" class="menu-icon" @click="$router.go(-1)"/>
             <input v-model="searchQuery" placeholder="Search for your next podcast" id="search-query__input" v-on:keyup="search">
         </div>
         <div v-for="pod in podcasts" :key="generatePodUid(pod)" :podcastData="pod" class="podcast-info-list">
@@ -34,6 +34,9 @@
             await this.getPodcasts()
             console.log(this.podcasts)
         }, 
+        beforeDestroy() {
+            this.podcasts = []
+        },
         methods: {
             getPodcasts: async function () {
                 this.podcasts = []
