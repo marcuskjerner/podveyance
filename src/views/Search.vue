@@ -4,6 +4,9 @@
             <font-awesome-icon icon="chevron-left" class="menu-icon" @click="$router.go(-1)"/>
             <input v-model="searchQuery" placeholder="Search for your next podcast" id="search-query__input" v-on:keyup="search">
         </div>
+        <div v-if="searchQuery === ''" class="podcast-info-list_empty_tooltip">
+            Please type something to find your new favorite podcast.
+        </div>
         <div v-for="pod in podcasts" :key="generatePodUid(pod)" :podcastData="pod" class="podcast-info-list">
                 <div @click="pushRoute('podcast', pod)">
                     <div class="podcast-info-list_artwork">
@@ -140,7 +143,7 @@
     .search-query {
         display: grid;
         grid-template-columns: 1fr 19fr;
-        justify-items: center;
+        justify-items: left;
         align-items: center;
         width: 100%;
         height: 5rem;
@@ -152,15 +155,22 @@
     }
 
     #search-query__input {
-        width: 100%;
+        margin-left: 1em;
+        width: 75%;
         font-weight: bold;
         font-size: 1rem;
         background: transparent;
         color: #fafafa;
     }
 
+    .podcast-info-list_empty_tooltip {
+        text-align: center;
+        color: #666;
+        margin-top: 2em;
+        font-weight: bold;
+        
+    }
+
         
 
-</style>textarea:focus, input:focus{
-    outline: none;
-}
+</style>

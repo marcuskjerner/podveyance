@@ -10,7 +10,7 @@
             </router-link>
         </div>
         <div class="home_grid-view"> <!-- TODO: Move to seperate component -->
-            <img v-for="pod in this.myPodcasts" :key="pod.id" :podcastData="pod" img :src="pod.artworkUrl" class="home_grid-artwork" />
+            <img v-for="pod in this.myPodcasts" :key="pod.id" :podcastData="pod" img :src="pod.artworkUrl" @click="pushRoute('podcast', pod)" class="home_grid-artwork" />
         </div>
         
     </div>
@@ -33,6 +33,16 @@
             }
             }
         },
+        methods: {
+            pushRoute(view, podcast) {
+                this.$router.push({
+                    name: view,
+                    params: {
+                        podcastData: podcast
+                    }
+                }) 
+            }
+        }
     }
 </script>
 
