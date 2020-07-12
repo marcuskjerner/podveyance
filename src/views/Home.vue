@@ -56,10 +56,12 @@
     }
 
     .app-logo {
+        font-family: 'Barlow Condensed', sans-serif;
         text-align: left;
         color: #eee;
         font-size: 1.2rem;
-        font-weight: bold;
+        font-weight: 500;
+        letter-spacing: 3px;
     }
 
     .home_search {
