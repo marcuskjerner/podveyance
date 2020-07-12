@@ -26,7 +26,7 @@
   const extractor = new RssEpisodeExtractor()
   export default {
       name: 'podcast',
-      mounted() {
+      beforeMount() {
         this.init()
         this.getPodcastInfo()
         this.isSubscribed()

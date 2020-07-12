@@ -1,7 +1,12 @@
 <template>
     <div class="podcast-list-item">
-      <p class="podcast-list-item_title">{{episodeData.title}}</p>
-      <p class="podcast-list-item_desc">{{episodeData.description.substring(0,150)}}</p>
+      <div>
+        <p class="podcast-list-item_title">{{episodeData.title}}</p>
+        <p class="podcast-list-item_desc">{{episodeData.description.substring(0,150)}}</p>
+      </div>
+      <div class="podcast-list-item_buttons">
+        <font-awesome-icon icon="play-circle" class="play-icon" @click="$router.go(-1)"/>
+      </div>
     </div>
 </template>
 
@@ -28,9 +33,11 @@
         color: white;
         padding: 1rem;
         border-bottom: #222 solid 1px;
-        cursor: pointer;
         transition: 0.2s background-color ease;
-
+        display: grid;
+        grid-template-columns: 6fr 1fr;
+        justify-items: end;
+        align-items: center;
         &:hover {
           background-color: rgb(24, 24, 24);
         }
@@ -49,6 +56,24 @@
       line-height: 1.1rem;
     }
 
+    .podcast-list-item_buttons {
+      padding-right: 1rem;
+    }
+
+    .play-icon {
+        cursor: pointer;
+        font-size: 1.2rem;
+        opacity: .7;
+        transition: 0.2s opacity ease;
+
+        &:hover {
+          opacity: 0.9;
+        }
+
+        &:active {
+          opacity: 1;
+        }
+      }
 
 </style>
 

@@ -6,10 +6,10 @@
         </div>
         <div v-for="pod in podcasts" :key="generatePodUid(pod)" :podcastData="pod" class="podcast-info-list">
                 <div @click="pushRoute('podcast', pod)">
-                    <div class="podcast-info-list__artwork">
+                    <div class="podcast-info-list_artwork">
                         <img :src="pod.artworkUrl" :alt="pod.name">    
                     </div>
-                    <div class="podcast-info-list__text">
+                    <div class="podcast-info-list_text">
                         <h4>{{ pod.name }}</h4>
                         <p>{{ pod.author }}</p>
                     </div>
@@ -124,12 +124,12 @@
         }
     }
 
-    .podcast-info-list__artwork > img {
+    .podcast-info-list_artwork > img {
         width: 96px;
         height: 96px;
     }
 
-    .podcast-info-list__text {
+    .podcast-info-list_text {
         color: #ececec;
         font-family: sans-serif;
         padding-left: 128px;
