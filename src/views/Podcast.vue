@@ -26,7 +26,7 @@
       :episodeData="episode"
       class="episodes"
     >
-      <podcastListItem :episodeData="episode"></podcastListItem>
+      <podcastListItem :episodeData="episode" @onDownload="downloadAudio(episode)"></podcastListItem>
     </div>
 
     <font-awesome-icon
@@ -41,10 +41,8 @@
 <script>
 import RssEpisodeExtractor from '@/common/RssEpisodeExtractor'
 import PodcastListItem from '@/components/PodcastListItem'
-// import PodcastStorageHandler from '@/common/PodcastStorageHandler'
 
 const extractor = new RssEpisodeExtractor()
-// const PSH = new PodcastStorageHandler()
 
 export default {
   name: 'podcast',
@@ -70,7 +68,12 @@ export default {
     return {
       episodes: [],
       isSubscribed: null,
-      myPodcasts: []
+      myPodcasts: [],
+      nowPlaying: {
+        src: String,
+        cover: String,
+        isPlaying: Boolean
+      }
     }
   },
   methods: {
@@ -79,13 +82,18 @@ export default {
     },
     async getPodcastInfo () {
       this.episodes = []
-      this.episodes = await extractor.getEpisodes(
-        this.$route.params.podcastData.feedUrl
-      )
-      this.isStored() ? this.changeSubIconState('subscribed') : this.changeSubIconState('unsubscribed')
+      try {
+        this.episodes = await extractor.getEpisodes(
+          this.$route.params.podcastData.feedUrl
+        )
+        this.isStored() ? this.changeSubIconState('subscribed') : this.changeSubIconState('unsubscribed')
 
-      const thumbnail = document.querySelector('.podcast-info_thumbnail')
-      thumbnail.style.backgroundImage = `url(${this.$route.params.podcastData.artworkUrl}`
+        const thumbnail = document.querySelector('.podcast-info_thumbnail')
+        thumbnail.style.backgroundImage = `url(${this.$route.params.podcastData.artworkUrl}`
+      } catch(e) {
+        this.$router.go(-1)
+      }
+      
     },
     changeSubIconState (val) {
       const subsIcon = document.querySelector('.podcast-info_subscribe_icon')
@@ -124,7 +132,7 @@ export default {
     }
   },
   components: {
-    podcastListItem: PodcastListItem
+    podcastListItem: PodcastListItem,
   }
 }
 </script>
