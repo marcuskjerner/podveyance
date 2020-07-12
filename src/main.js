@@ -7,11 +7,12 @@ import {
   faChevronLeft,
   faCheckCircle,
   faPlayCircle,
-  faPlusCircle
+  faPlusCircle,
+  faSearch
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faChevronLeft, faCheckCircle, faPlayCircle, faPlusCircle)
+library.add(faChevronLeft, faCheckCircle, faPlayCircle, faPlusCircle, faSearch)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(UUID)
 
