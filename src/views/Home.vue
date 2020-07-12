@@ -9,7 +9,7 @@
                 />
             </router-link>
         </div>
-        <div class="home_grid-view">
+        <div class="home_grid-view"> <!-- TODO: Move to seperate component -->
             <img v-for="pod in this.myPodcasts" :key="pod.id" :podcastData="pod" img :src="pod.artworkUrl" class="home_grid-artwork" />
         </div>
         

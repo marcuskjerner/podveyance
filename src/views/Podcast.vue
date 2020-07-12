@@ -73,42 +73,28 @@ export default {
       myPodcasts: []
     }
   },
-  watch: {
-    isSubscribed: {
-      handler: function(val, oldVal) {
-        console.log(val, oldVal)
-        this.checkSubscription(val)
-      },
-      deep: true
-    }
-  }, 
   methods: {
     init () {
       this.episodes = []
-      this.isSubscribed = false
     },
     async getPodcastInfo () {
+      this.episodes = []
       this.episodes = await extractor.getEpisodes(
         this.$route.params.podcastData.feedUrl
       )
+      this.isStored() ? this.changeSubIconState('subscribed') : this.changeSubIconState('unsubscribed')
 
       const thumbnail = document.querySelector('.podcast-info_thumbnail')
       thumbnail.style.backgroundImage = `url(${this.$route.params.podcastData.artworkUrl}`
-
-      console.log(this.episodes)
     },
-    checkSubscription (val) {
+    changeSubIconState (val) {
       const subsIcon = document.querySelector('.podcast-info_subscribe_icon')
-
-      if (val) {
-        subsIcon.style.color = '#aaa'
-      } else {
-        subsIcon.style.color = '#50C878'
-      }
+      
+      subsIcon.style.color = val === 'subscribed' ? '#50C878' : '#aaa'
     },
     toggleSubscription () {
-      
       if (!this.isStored()) {
+        this.changeSubIconState('subscribed')
         this.myPodcasts.push(this.podcastData)
         this.storeMyPodcasts()
       } else {
@@ -122,15 +108,18 @@ export default {
       ) {
         this.isSubscribed = true
         return true
+      } else {
+        this.isSubscribed = false
+        return false
       }
-      this.isSubscribed = false
-      return false
+      
     },
     storeMyPodcasts () {
       const parsedPodcasts = JSON.stringify(this.myPodcasts)
       localStorage.setItem('podcasts', parsedPodcasts)
     },
     unsubscribePodcast () {
+      this.changeSubIconState('unsubscribed')
       this.myPodcasts = this.myPodcasts.filter((pod) => pod.id !== this.podcastData.id)
     }
   },
