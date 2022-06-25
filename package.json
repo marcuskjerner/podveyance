@@ -14,7 +14,7 @@
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
     "core-js": "^3.6.5",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "rss-parser": "^3.8.0",
     "vue": "^2.6.11",
     "vue-router": "^3.3.4",
